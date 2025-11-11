@@ -1,28 +1,67 @@
-from fastapi import FastAPI, HTTPException
-from schemas import Reminder
+from fastapi import FastAPI, HTTPException, Depends
+from schemas import ReminderCreate, ReminderUpdate, ReminderRead
+from db.deps import get_db
+from sqlalchemy.orm import Session
+from db import crud
+from typing import List
+
 
 app = FastAPI()
 
-reminders = []
 
-
-@app.get('/')
-async def all_reminders():
+@app.get('/reminders', response_model=List[ReminderRead])
+# Get all reminders
+async def all_reminders(db: Session = Depends(get_db)):
+    reminders = crud.get_all_reminders(db)
+    if not reminders:
+        return []
     return reminders
 
 
-@app.post('/add')
-async def add_reminder(reminder: Reminder):
-    reminder.id = len(reminders) + 1
-    reminders.append(reminder)
-    return {"message": "Succesfully added", "reminder": reminder}
+@app.post('/create', response_model=ReminderRead)
+# Create reminder
+async def create_reminder(
+    reminder: ReminderCreate, 
+    db: Session = Depends(get_db)
+):
+    new_reminder = crud.create_reminder(
+        db,
+        title=reminder.title,
+        description=reminder.description,
+        due_to=reminder.due_to
+    )
+    return new_reminder
 
 
-@app.delete('/delete/{reminder_id}')
-async def delete_reminder(reminder_id: int):
-    for r in reminders:
-        if reminder_id == r.id:
-            reminders.remove(r)
-            return {"message": "Reminder succesfully deleted"}
+@app.get('/reminders/{id}', response_model=ReminderRead)
+# Get specific reminder
+async def get_reminder(id: int, db: Session = Depends(get_db)):
+    reminder = crud.get_reminder(db, id)
+    if not reminder:
+        raise HTTPException(status_code=404, detail="Object was not found")
+    return reminder
 
-    raise HTTPException(status_code=404, detail="Reminder not found")
+
+@app.put('/reminders/{id}', response_model=ReminderRead)
+# Update reminder values
+async def update_reminder(
+    id: int, 
+    reminder: ReminderUpdate, 
+    db: Session = Depends(get_db)
+):
+    updated_reminder = crud.update_reminder(db, id, reminder)
+    
+    if not updated_reminder:
+        raise HTTPException(status_code=404, detail="Object was not found")
+
+    return updated_reminder
+
+
+@app.delete('/reminders/{id}')
+# Delete reminder
+async def delete_reminder(id: int, db: Session = Depends(get_db)):
+    deleted = crud.delete_reminder(db, id)
+    if not deleted:
+        raise HTTPException(status_code=404, detail="Object was not found")
+    
+    return deleted

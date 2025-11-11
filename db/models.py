@@ -1,18 +1,13 @@
-from pydantic import BaseModel, field_validator
-from datetime import datetime
-from fastapi import HTTPException
+from sqlalchemy import Column, Integer, DateTime, String
+from datetime import datetime, timezone
+from .base import Base
 
 
-class Reminder(BaseModel):
-    id: int
-    title: str
-    description: str
-    due_to: str
-    
-    @field_validator('due_to', mode='before')
-    def check_date(cls, value):
-        try:
-            datetime.strptime(value, "%d-%m-%Y %H:%M")
-        except ValueError:
-            raise HTTPException(status_code=422, detail="Field should be filled in dd-mm-yyyy hh:mm format")
-        return value
+class Reminder(Base):
+    __tablename__ = "reminders"     # table name in db
+
+    id = Column(Integer, primary_key=True, index=True)
+    title = Column(String, nullable=False)
+    description = Column(String, nullable=False)
+    due_to = Column(DateTime, nullable=False)
+    created_at = Column(DateTime, default=datetime.now(timezone.utc))
