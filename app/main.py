@@ -1,5 +1,5 @@
 from fastapi import FastAPI, HTTPException, Depends
-from schemas import ReminderCreate, ReminderUpdate, ReminderRead
+from app.schemas import ReminderCreate, ReminderUpdate, ReminderRead
 from db.deps import get_db
 from sqlalchemy.orm import Session
 from db import crud
@@ -7,6 +7,10 @@ from typing import List
 
 
 app = FastAPI()
+
+@app.get('/')
+async def index():
+    return {"message": "App is working"}
 
 
 @app.get('/reminders', response_model=List[ReminderRead])

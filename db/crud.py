@@ -1,7 +1,7 @@
 from sqlalchemy.orm import Session
 from . import models
 from datetime import datetime
-from schemas import ReminderUpdate
+from app.schemas import ReminderUpdate
 
 
 # Read all
