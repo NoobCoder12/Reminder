@@ -44,3 +44,9 @@ class ReminderRead(BaseModel):
         json_encoders = {
             datetime: lambda v: v.strftime("%d-%m-%Y %H:%M")
         }
+        
+        
+class EmailSchema(BaseModel):
+    to: str
+    subject: str
+    body: str

@@ -4,9 +4,11 @@ from db.deps import get_db
 from sqlalchemy.orm import Session
 from db import crud
 from typing import List
+from .send_mail import send_mail
 
 
 app = FastAPI()
+mail_receiver = 'pythoneqq36@gmail.com'
 
 @app.get('/')
 async def index():
@@ -34,6 +36,12 @@ async def create_reminder(
         description=reminder.description,
         due_to=reminder.due_to
     )
+    
+    send_mail(
+        mail_receiver, 
+        f"New reminder added: {new_reminder.title}",
+        f"New reminder was added to you list: \n{new_reminder.title}\n{new_reminder.description}"
+        )
     return new_reminder
 
 

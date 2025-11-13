@@ -1,36 +1,54 @@
+# =========================
 # Virtual environments
+# =========================
 .venv/
 venv/
 
+# =========================
 # Python cache files
+# =========================
 __pycache__/
 *.py[cod]
 *$py.class
 
+# =========================
 # Logs and databases
+# =========================
 *.log
+test.db           # SQLite database
 *.sqlite3
+dump.rdb          # Redis dump file
 
+# =========================
 # IDE / Editors
+# =========================
 .vscode/
 .idea/
 *.sublime-project
 *.sublime-workspace
 
+# =========================
 # System files
+# =========================
 .DS_Store
 Thumbs.db
 
+# =========================
 # Python package and build files
+# =========================
 *.egg-info/
 dist/
 build/
 
+# =========================
 # PyInstaller
+# =========================
 *.manifest
 *.spec
 
+# =========================
 # Coverage reports
+# =========================
 htmlcov/
 .coverage
 .coverage.*
@@ -40,8 +58,17 @@ coverage.xml
 *.cover
 *.py,cover
 
+# =========================
 # Unit test / pytest
+# =========================
 .pytest_cache/
 
+# =========================
+# Environment files
+# =========================
 .env
-*.rdb
+
+# =========================
+# Misc / temporary
+# =========================
+*.rdb        # Redis database dump
