@@ -6,6 +6,8 @@ from db import crud
 from typing import List
 from dotenv import load_dotenv
 
+# Async functions need async sessions
+
 load_dotenv()
 
 app = FastAPI()
