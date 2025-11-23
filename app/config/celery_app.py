@@ -1,4 +1,6 @@
 from celery import Celery
+from celery.signals import worker_process_init
+from db.base import engine
 
 celery = Celery(
     "tasks",
@@ -14,3 +16,13 @@ celery.conf.beat_schedule = {
         "schedule": 60.0    # Check every minute
     }
 }
+
+from app.tasks import check_reminders
+
+
+@worker_process_init.connect
+def setup_db_connection(**kwargs):  # Use **kwargs for signals
+    """Dispose engine connections after worker process fork"""
+    
+    print("🔧 Worker initialized - disposing SQLAlchemy engine")
+    engine.dispose()    # Closes parent connection, no for conflicts

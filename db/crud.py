@@ -6,7 +6,12 @@ from app.schemas import ReminderUpdate
 
 # Read all
 def get_all_reminders(db: Session):
-    return db.query(models.Reminder).all()
+    reminders = db.query(models.Reminder).all()
+    
+    if not reminders:
+        return {'message': 'No reminders. Add one to start'}
+    
+    return reminders
 
 
 # Create reminder
@@ -53,7 +58,20 @@ def delete_reminder(db: Session, id: int):
     reminder = db.get(models.Reminder, id)
     if not reminder:
         return None
-    
+
     db.delete(reminder)
     db.commit()
     return reminder
+
+
+# Delete all reminders
+def delete_all(db: Session):
+    deleted_reminders = db.query(models.Reminder).delete()
+
+    db.commit()
+    db.expire_all()     # New GET will get updated rows
+
+    if not deleted_reminders:
+        return None
+
+    return deleted_reminders

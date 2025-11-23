@@ -4,18 +4,19 @@ from db.deps import get_db
 from sqlalchemy.orm import Session
 from db import crud
 from typing import List
-from .send_mail import send_mail
+from dotenv import load_dotenv
 
+load_dotenv()
 
 app = FastAPI()
-mail_receiver = 'pythoneqq36@gmail.com'
+
 
 @app.get('/')
 async def index():
     return {"message": "App is working"}
 
 
-@app.get('/reminders', response_model=List[ReminderRead])
+@app.get('/reminders', response_model=List[ReminderRead], description="Returns all reminders in the app")
 # Get all reminders
 async def all_reminders(db: Session = Depends(get_db)):
     reminders = crud.get_all_reminders(db)
@@ -24,7 +25,7 @@ async def all_reminders(db: Session = Depends(get_db)):
     return reminders
 
 
-@app.post('/create', response_model=ReminderRead)
+@app.post('/create', response_model=ReminderRead, description="Create reminder")
 # Create reminder
 async def create_reminder(
     reminder: ReminderCreate, 
@@ -36,16 +37,10 @@ async def create_reminder(
         description=reminder.description,
         due_to=reminder.due_to
     )
-    
-    send_mail(
-        mail_receiver, 
-        f"New reminder added: {new_reminder.title}",
-        f"New reminder was added to you list: \n{new_reminder.title}\n{new_reminder.description}"
-        )
     return new_reminder
 
 
-@app.get('/reminders/{id}', response_model=ReminderRead)
+@app.get('/reminders/{id}', response_model=ReminderRead, description="Get reminders by its ID")
 # Get specific reminder
 async def get_reminder(id: int, db: Session = Depends(get_db)):
     reminder = crud.get_reminder(db, id)
@@ -54,7 +49,7 @@ async def get_reminder(id: int, db: Session = Depends(get_db)):
     return reminder
 
 
-@app.put('/reminders/{id}', response_model=ReminderRead)
+@app.put('/reminders/{id}', response_model=ReminderRead, description="Edit reminder")
 # Update reminder values
 async def update_reminder(
     id: int, 
@@ -69,11 +64,21 @@ async def update_reminder(
     return updated_reminder
 
 
-@app.delete('/reminders/{id}')
+@app.delete('/reminders/{id}', description="Delete reminder by its ID")
 # Delete reminder
 async def delete_reminder(id: int, db: Session = Depends(get_db)):
     deleted = crud.delete_reminder(db, id)
     if not deleted:
         raise HTTPException(status_code=404, detail="Object was not found")
-    
+
     return deleted
+
+
+@app.delete('/reminders', description="Delete all reminders")
+# Delete all reminders
+async def delete_all_reminders(db: Session = Depends(get_db)):
+    deleted_reminders = crud.delete_all(db)
+    if not deleted_reminders:
+        return {'message': 'No reminders to delete'}
+
+    return deleted_reminders
