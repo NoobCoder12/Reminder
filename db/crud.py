@@ -6,12 +6,7 @@ from app.schemas import ReminderUpdate
 
 # Read all
 def get_all_reminders(db: Session):
-    reminders = db.query(models.Reminder).all()
-    
-    if not reminders:
-        return {'message': 'No reminders. Add one to start'}
-    
-    return reminders
+    return db.query(models.Reminder).all()
 
 
 # Create reminder
@@ -20,7 +15,7 @@ def create_reminder(db: Session, title: str, description: str, due_to: str):
         due_to_dt = datetime.strptime(due_to, "%d-%m-%Y %H:%M")
     except ValueError:
         raise ValueError("due_to must be in format DD-MM-YYYY HH:MM")
-    
+
     reminder = models.Reminder(title=title, description=description, due_to=due_to_dt)
     db.add(reminder)
     db.commit()

@@ -1,6 +1,6 @@
 from sqlalchemy import Column, Integer, DateTime, String
 from datetime import datetime, timezone
-from .base import Base, engine
+from .base import Base
 
 
 class Reminder(Base):
