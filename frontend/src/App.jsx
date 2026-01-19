@@ -1,22 +1,15 @@
-import { useState, useEffect } from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import "./App.css";
 import Welcome from "./Welcome"
 
 function App () {
-  const [message, setMessage] = useState('');
-
-  useEffect (() => {
-    fetch("http://localhost:8000/")
-      .then((res) => res.json())
-      .then((data) => setMessage(data.message))
-      .catch((err) => console.error(err))
-  }, []);
 
   return (
-    <div>
-      <Welcome />
-      <p>Message from backend: {message}</p>
-    </div>
+    <Router>
+      <Routes>
+        <Route path="/" element={<Welcome />}/>
+      </Routes>
+    </Router>
   )
   };
 

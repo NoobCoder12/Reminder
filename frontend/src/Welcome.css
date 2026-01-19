@@ -10,7 +10,19 @@
   }
 }
 
+
 .welcome h1 {
     animation: entry 1s ease-out;
     font-size: 9rem;
+}
+
+.welcome p {
+    font-size: 1.5rem;
+    opacity: 0;
+    animation: entry 1s ease-out 1s forwards;
+}
+
+.welcome button {
+    opacity: 0;
+    animation: entry 1s ease-out 2s forwards;
 }

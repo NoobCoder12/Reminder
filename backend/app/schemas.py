@@ -17,7 +17,7 @@ class ReminderCreate(BaseModel):
 
 
 class ReminderUpdate(BaseModel):
-    id: int | None = None
+    id: int | None = None       # Field optional
     title: str | None = None
     description: str | None = None
     due_to: str | None = None
