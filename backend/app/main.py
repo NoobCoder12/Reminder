@@ -5,12 +5,26 @@ from sqlalchemy.orm import Session
 from db import crud
 from typing import List
 from dotenv import load_dotenv
+from fastapi.middleware.cors import CORSMiddleware
 
 # Async functions need async sessions
 
 load_dotenv()
 
 app = FastAPI()
+
+origins = [
+    "http://localhost:5173"
+]
+
+# Creating midddleware for Cross-Origin Resource Sharing
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"]
+)
 
 
 @app.get('/')

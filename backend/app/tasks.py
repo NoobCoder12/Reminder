@@ -48,6 +48,7 @@ def check_reminders():
 
         for r in reminders:
             delta = r.due_to - now
+            
             seconds_left = delta.total_seconds()
             print(f"ZOSTAŁO {seconds_left}, CZAS TO: {ALERT_THRESHOLD_SECONDS}")
             if 0 <= seconds_left <= ALERT_THRESHOLD_SECONDS and r.times_alert_sent < 3:
