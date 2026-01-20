@@ -1,0 +1,10 @@
+.choose {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    align-items: center;
+}
+
+.choose button {
+    width: 30%;
+}

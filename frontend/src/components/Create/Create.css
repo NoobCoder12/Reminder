@@ -1,0 +1,21 @@
+.create {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.create input {
+    background-color: white;
+    height: 5vh;
+    color: black;
+    font-size: 1rem;
+    border-radius: 10px;
+}
+
+.create textarea {
+    background-color: white;
+    height: 10vh;
+    color: black;
+    font-size: 1rem;
+    border-radius: 10px;
+}
