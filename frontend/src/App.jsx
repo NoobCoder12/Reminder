@@ -4,6 +4,7 @@ import Welcome from "./components/Welcome/Welcome.jsx"
 import Choose from "./components/Choose/Choose.jsx"
 import Create from "./components/Create/Create.jsx"
 import ShowReminders from "./components/ShowReminders/ShowReminders.jsx"
+import EditReminder from "./components/EditReminder/EditReminder.jsx";
 
 function App () {
 
@@ -14,6 +15,7 @@ function App () {
         <Route path="/choose" element={<Choose />}/>
         <Route path="/create" element={<Create />}/>
         <Route path="/reminders" element={<ShowReminders />}/>
+        <Route path="/reminders/:id/edit" element={<EditReminder />}/> 
       </Routes>
     </Router>
   )

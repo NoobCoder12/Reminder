@@ -1,10 +1,12 @@
 import "./ShowReminders.css"
 import { useEffect, useState } from "react"
+import { useNavigate } from "react-router-dom";
 
 function ShowReminders () {
-
-    const [reminders, setReminders] = useState([])
+    const navigate = useNavigate();
+    const [reminders, setReminders] = useState([]);
     const [message, setMessage] = useState("");
+    const [openMenuId, setOpenMenuId] = useState(null);
 
     useEffect (() => {
         const fetchReminders = async () => { 
@@ -32,9 +34,21 @@ function ShowReminders () {
 
         {reminders.map((r) =>(
             <div className="reminder" key={r.id}>
-                <h3>{r.title}</h3>
+                <div className="header">
+                    <h2>{r.title}</h2>
+                    <div className="actions">
+                        <button onClick={() => setOpenMenuId(openMenuId === r.id ? null : r.id)}>...</button>   {/*if false r.id will be assigned to openMenuId*/}
+                    {openMenuId  === r.id && (
+                        <ul className="dropdown">
+                            <li onClick={() => navigate(`/reminders/${r.id}/edit`)}>Edit</li>
+                            <li>Delete</li>
+                        </ul>
+                        )}
+                    </div>
+                </div>
                 <p>{r.description}</p>
-                <small>{r.due_to}</small>
+                <p>{String(openMenuId)}</p>
+                <p>Must be done until: {r.due_to}</p>
             </div>
         ))}
     </div>

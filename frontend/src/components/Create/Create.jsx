@@ -48,7 +48,7 @@ function Create () {
         <div className='create'>
             <h1>Create Reminder</h1>
 
-            <input type='text' placeholder='Title' value={title} onChange={(e) => setTitle(e.target.value)}/>
+            <input type='text' placeholder='Title' value={title} onChange={(e) => setTitle(e.target.value)}/>   {/*'value' is a value of hook value*/}
 
             <textarea placeholder="Description" value={description} onChange={(e) => setDescription(e.target.value)}/>
 
