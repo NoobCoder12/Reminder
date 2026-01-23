@@ -5,11 +5,13 @@ import Choose from "./components/Choose/Choose.jsx"
 import Create from "./components/Create/Create.jsx"
 import ShowReminders from "./components/ShowReminders/ShowReminders.jsx"
 import EditReminder from "./components/EditReminder/EditReminder.jsx";
+import BackButton from "./components/BackButton/BackButton.jsx";
 
 function App () {
 
   return (
     <Router>
+      <BackButton />
       <Routes>
         <Route path="/" element={<Welcome />}/>
         <Route path="/choose" element={<Choose />}/>

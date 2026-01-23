@@ -7,8 +7,18 @@ function ShowReminders () {
     const [reminders, setReminders] = useState([]);
     const [message, setMessage] = useState("");
     const [openMenuId, setOpenMenuId] = useState(null);
+    const openMenuIdRef = useRef(openMenuId)
 
     useEffect (() => {
+
+        openMenuIdRef.current = openMenuId;
+
+        const closeMenuOutside = (e) => {
+            if(openMenuIdRef.current && !e.target.closest(".dropdown") && !e.target.closest(".actions button")) { // TODO: discuss
+                setOpenMenuId(null)
+            }
+    }
+
         document.addEventListener('mousedown', closeMenuOutside)
 
         const fetchReminders = async () => { 
@@ -52,12 +62,6 @@ function ShowReminders () {
 
         } catch(err) {
             setMessage(err.message)
-        }
-    }
-
-    const closeMenuOutside = (e) => {
-        if(openMenuId && !e.target.closest(".dropdown") && !e.target.closest(".actions button")) { 
-            setOpenMenuId(null)
         }
     }
 

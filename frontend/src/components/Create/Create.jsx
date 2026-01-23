@@ -38,6 +38,8 @@ function Create () {
             const data = await res.json()
 
             setMessage(`Reminder created: ${data.title}`);  //With no error data would have 'title' attr
+
+            alert("Reminder created succesfully")
         } catch (err) {
             console.error("Fetch error: ", err)
             setMessage("Error creating reminder");
