@@ -33,7 +33,7 @@ function ShowReminders () {
             document.removeEventListener('mousedown', closeMenuOutside); // Removes event listener before next page rendering
         }
 
-    }, []);
+    }, [openMenuId]);
 
     const handleDelete = async (id) => {
         if (!window.confirm("Are you sure you want to delete this reminder?")) {
@@ -56,7 +56,7 @@ function ShowReminders () {
     }
 
     const closeMenuOutside = (e) => {
-        if(openMenuId && !e.target.closest(".dropdown") || !e.target.closest(".actions button")) {
+        if(openMenuId && !e.target.closest(".dropdown") && !e.target.closest(".actions button")) { 
             setOpenMenuId(null)
         }
     }
