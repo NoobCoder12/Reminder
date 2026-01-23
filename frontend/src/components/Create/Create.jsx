@@ -50,7 +50,7 @@ function Create () {
 
             <input type='text' placeholder='Title' value={title} onChange={(e) => setTitle(e.target.value)}/>   {/*'value' is a value of hook value*/}
 
-            <textarea placeholder="Description" value={description} onChange={(e) => setDescription(e.target.value)}/>
+            <textarea placeholder="Description" value={description} onChange={(e) => setDescription(e.target.value)}/>  {/*Event is automatically passed as function argument by default*/}
 
             <input type="datetime-local" placeholder='Due to' value={dueTo} onChange={(e) => setDueTo(e.target.value)}/>
 

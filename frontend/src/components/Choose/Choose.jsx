@@ -7,9 +7,9 @@ function Choose () {
     
     return (
         <div className='choose'>
-            <h1>What would you like to do?</h1>
-            <button onClick={() => navigate("/create")}>Create reminder</button>
-            <button onClick={() => navigate("/reminders")}>See my reminders</button>
+            <h1 className='chooseTitle'>What would you like to do?</h1>
+            <button className="chooseButtonFirst" onClick={() => navigate("/create")}>Create reminder</button>
+            <button className="chooseButtonSecond" onClick={() => navigate("/reminders")}>See my reminders</button>
         </div>
     )
 }

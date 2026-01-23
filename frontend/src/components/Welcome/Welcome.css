@@ -11,15 +11,17 @@
 }
 
 
+
 .welcome h1 {
     animation: entry 1s ease-out;
     font-size: 9rem;
 }
 
-.welcome p {
+.welcomeInfo {
     font-size: 1.5rem;
     opacity: 0;
     animation: entry 1s ease-out 1s forwards;
+    margin-bottom: 3rem;
 }
 
 .welcome button {

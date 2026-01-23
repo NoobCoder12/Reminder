@@ -18,9 +18,9 @@ function Welcome () {
     return (
         <div className='welcome'>
             <h1>Welcome to Reminder</h1>
-            <p>This app will not let you forget anything!</p>
+            <p className="welcomeInfo">This app will not let you forget anything!</p>
             <button onClick={() => navigate("/choose")}>LET'S START</button>
-            <p>Message from backend: {message}</p>
+            {/* <p className="appInfo">Message from backend: {message}</p> */}
         </div>
     )
 }
