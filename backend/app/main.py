@@ -51,7 +51,8 @@ async def create_reminder(
         db,
         title=reminder.title,
         description=reminder.description,
-        due_to=reminder.due_to
+        due_to=reminder.due_to,
+        email=reminder.email
     )
     return new_reminder
 

@@ -1,5 +1,6 @@
 import './Create.css';
 import { useState} from "react";
+import { useNavigate } from 'react-router-dom';
 
 
 function Create () {
@@ -7,6 +8,8 @@ function Create () {
     const [description, setDescription] = useState("");
     const [dueTo, setDueTo] = useState("");
     const [message, setMessage] = useState("");
+    const [email, setEmail] = useState("");
+    const navigate = useNavigate();
 
 
 
@@ -29,7 +32,8 @@ function Create () {
                 body: JSON.stringify({
                     title,
                     description,
-                    due_to: formatDate(dueTo)
+                    due_to: formatDate(dueTo),
+                    email
                 }),
             });
 
@@ -39,7 +43,9 @@ function Create () {
 
             setMessage(`Reminder created: ${data.title}`);  //With no error data would have 'title' attr
 
-            alert("Reminder created succesfully")
+            alert("Reminder created succesfully");
+            navigate("/reminders");
+            
         } catch (err) {
             console.error("Fetch error: ", err)
             setMessage("Error creating reminder");
@@ -54,6 +60,8 @@ function Create () {
 
             <textarea placeholder="Description" value={description} onChange={(e) => setDescription(e.target.value)}/>  {/*Event is automatically passed as function argument by default*/}
 
+            <input type='email' placeholder='Email' value={email} onChange={(e) => setEmail(e.target.value)}/> 
+            
             <input type="datetime-local" placeholder='Due to' value={dueTo} onChange={(e) => setDueTo(e.target.value)}/>
 
             <button onClick={handleCreate}>Create</button>

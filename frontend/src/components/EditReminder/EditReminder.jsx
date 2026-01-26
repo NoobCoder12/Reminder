@@ -71,6 +71,8 @@ function GetReminder() {
 
                 <textarea name="description" value={reminder.description} onChange={handleChange} placeholder="Description"/>
 
+                <input type='email' placeholder='Email' value={reminder.email} onChange={handleChange}/> 
+
                 <input type="date" name="due_to" value={reminder.due_to} onChange={handleChange}/>
 
                 <button type="submit">Save</button>

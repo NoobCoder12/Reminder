@@ -6,6 +6,7 @@ class ReminderCreate(BaseModel):
     title: str
     description: str
     due_to: str
+    email: str
 
     @field_validator('due_to', mode='before')
     def check_date(cls, value):
@@ -21,6 +22,7 @@ class ReminderUpdate(BaseModel):
     title: str | None = None
     description: str | None = None
     due_to: str | None = None
+    email: str | None = None
 
     @field_validator('due_to', mode='before')
     def check_date(cls, value):
@@ -38,14 +40,15 @@ class ReminderRead(BaseModel):
     title: str
     description: str
     due_to: datetime
+    email: str
 
     class Config:
         from_attributes = True
         json_encoders = {
             datetime: lambda v: v.strftime("%d-%m-%Y %H:%M")
         }
-        
-        
+
+
 class EmailSchema(BaseModel):
     to: str
     subject: str

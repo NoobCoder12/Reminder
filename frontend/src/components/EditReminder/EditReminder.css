@@ -8,3 +8,28 @@
     gap: 1rem;
     max-width: 400px;
 }
+
+.editForm textarea {
+    background-color: white;
+    height: 10vh;
+    color: black;
+    font-size: 1rem;
+    border-radius: 10px;
+    opacity: 0;
+    animation: entry 0.8s ease-in-out 0.8s forwards;
+}
+
+.editForm button {
+    opacity: 0;
+    animation: entry 0.8s ease-in-out 1.6s forwards;
+}
+
+.editForm input {
+    background-color: white;
+    height: 5vh;
+    color: black;
+    font-size: 1rem;
+    border-radius: 10px;
+    opacity: 0;
+    animation: entry 0.8s ease-in-out 0.8s forwards;
+}

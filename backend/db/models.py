@@ -10,5 +10,6 @@ class Reminder(Base):
     title = Column(String, nullable=False)
     description = Column(String, nullable=False)
     due_to = Column(DateTime, nullable=False)
+    email = Column(String, nullable=False)
     created_at = Column(DateTime, default=datetime.now(timezone.utc))
     times_alert_sent = Column(Integer, default=0, nullable=False)

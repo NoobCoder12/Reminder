@@ -10,13 +10,13 @@ def get_all_reminders(db: Session):
 
 
 # Create reminder
-def create_reminder(db: Session, title: str, description: str, due_to: str):
+def create_reminder(db: Session, title: str, description: str, due_to: str, email: str):
     try:
         due_to_dt = datetime.strptime(due_to, "%d-%m-%Y %H:%M")
     except ValueError:
         raise ValueError("due_to must be in format DD-MM-YYYY HH:MM")
 
-    reminder = models.Reminder(title=title, description=description, due_to=due_to_dt)
+    reminder = models.Reminder(title=title, description=description, due_to=due_to_dt, email=email)
     db.add(reminder)
     db.commit()
     db.refresh(reminder)

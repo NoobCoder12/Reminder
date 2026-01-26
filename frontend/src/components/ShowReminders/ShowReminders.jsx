@@ -30,6 +30,8 @@ function ShowReminders () {
             const data = await res.json();
             setReminders(data);
 
+            console.log(data);
+
         } catch(err) {
             console.error(err);
             setMessage("Error fetching data");
@@ -70,6 +72,13 @@ function ShowReminders () {
 
         {message && <p>{message}</p>}
 
+        {reminders.length == 0 && (
+            <>
+            <h1>Nothing to remember about yet</h1>
+            <button onClick={() => navigate("/create")}> Add your first reminder</button>
+            </>
+            )}
+
         {reminders.map((r, i) => (
             <div className="reminder" key={r.id} style = {{ opacity: 0, animation: `entry 0.8s ease-out ${i}s forwards`}}>
                 <div className="header">
@@ -85,8 +94,8 @@ function ShowReminders () {
                     </div>
                 </div>
                 <p>{r.description}</p>
-                <p>{String(openMenuId)}</p>
-                <p>Must be done until: {r.due_to}</p>s
+                <p>Must be done until: <strong>{r.due_to}</strong></p>
+                <p>Alert will be sent to email: <strong>{r.email}</strong></p>
             </div>
         ))}
     </div>
