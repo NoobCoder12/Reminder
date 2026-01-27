@@ -13,7 +13,7 @@ celery.conf.timezone = "Europe/Warsaw"
 celery.conf.beat_schedule = {
     "check_tasks_every_minute": {
         "task": "app.tasks.check_reminders",    # Name of task
-        "schedule": 60.0    # Check every minute
+        "schedule": 10.0    # Check every minute
     }
 }
 

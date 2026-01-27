@@ -1,5 +1,6 @@
 from pydantic import BaseModel, field_validator
 from datetime import datetime
+from typing import Literal
 
 
 class ReminderCreate(BaseModel):
@@ -7,7 +8,8 @@ class ReminderCreate(BaseModel):
     description: str
     due_to: str
     email: str
-
+    alert_type: Literal["minutes", 'hours', "days"]
+    
     @field_validator('due_to', mode='before')
     def check_date(cls, value):
         try:

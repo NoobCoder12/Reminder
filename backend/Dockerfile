@@ -23,4 +23,4 @@ CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]
 # "uvicorn" - serwer ASI, który odpala backend
 # "app.main:app" - ścieka do obiektu FastAPI
 # "--host","0.0.0.0" pozwala na dostęp serwera poza kontenerem
-# "--port", "8000" - ustala port do nasłuchiwania, zgodnie z EXPOSE
+# "--port", "8000" - ustala port do nasłuchiwania, zgodnie z EXPOSEa

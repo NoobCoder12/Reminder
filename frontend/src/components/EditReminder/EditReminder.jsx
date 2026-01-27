@@ -73,7 +73,13 @@ function GetReminder() {
 
                 <input type='email' placeholder='Email' value={reminder.email} onChange={handleChange}/> 
 
-                <input type="date" name="due_to" value={reminder.due_to} onChange={handleChange}/>
+                <input type="datetime-local" name="due_to" value={reminder.due_to} onChange={handleChange}/>
+
+                <select>
+                    <option value="minutes">15 minutes</option>
+                    <option value="hours">1 hour</option>
+                    <option value="days">1 day</option>
+                </select>
 
                 <button type="submit">Save</button>
             </form>
