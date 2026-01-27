@@ -1,6 +1,6 @@
 from app.config.celery_app import celery
 from db.crud import get_all_reminders
-from datetime import datetime
+from datetime import datetime, timezone
 from app.send_mail import send_mail
 import os
 from db.base import SessionLocal
@@ -16,8 +16,8 @@ HOUR = 60 * MINUTE
 DAY = 24 * HOUR
 
 # Only one should be true
-ALERT_MINUTES = False
-ALERT_HOURS = True
+ALERT_MINUTES = True
+ALERT_HOURS = False
 ALERT_DAYS = False
 
 # CONSIDER ADDING FLAGS FOR HOURS, DAYS, MINUTES FROM FRONTEND
@@ -39,21 +39,26 @@ elif ALERT_DAYS:
 def check_reminders():
     db = SessionLocal()
     try:
+        logger.info(f"🔍 Database URL: {db.bind.url}")
+        # db.expire_all()
         reminders = get_all_reminders(db)
 
         if not reminders:
             logger.info("No reminders in database")
 
-        now = datetime.now()
+        now = datetime.now(timezone.utc)
 
         for r in reminders:
             delta = r.due_to - now
-            
+            receiver = r.email
             seconds_left = delta.total_seconds()
             print(f"ZOSTAŁO {seconds_left}, CZAS TO: {ALERT_THRESHOLD_SECONDS}")
-            if 0 <= seconds_left <= ALERT_THRESHOLD_SECONDS and r.times_alert_sent < 3:
+            if seconds_left <= 0:
+                print(f"Expired - skipping task {r.title}")
+                continue
+            elif 0 <= seconds_left <= ALERT_THRESHOLD_SECONDS and r.times_alert_sent < 3:
                 send_mail(
-                    RECEIVER,
+                    receiver,
                     subject,
                     f"It's your reminder! Don't forget about {r.title}! Deadline expires soon. Good luck!")
                 r.times_alert_sent += 1

@@ -1,0 +1,58 @@
+# Wersja uzywana przez nasz kontener
+version: "3.9"
+
+# Tutaj definujemy wszystkie usługi, które mają ze sobą działać
+services:
+  # Nazwa kontenera
+  backend:
+  # Docker Compose buduje obraz używając Dockerfile z katalogu backend.
+    build: ./backend
+    # Nazwa kontenera załozona przez nas
+    container_name: backend
+    # port kontenera (po prawej) mapowany na port hosta (po lewej)
+    ports: 
+      - "8000:8000"
+    # Okno dla kontenera, baza nie zniknie po docker compose down
+    volumes:
+      - ./backend:/app
+      - ./backend/db:/app/db  
+    # Kontener będzie widział zmiany w kodzie i się przeładuje
+    command: uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
+    # backend uruchomi się po starcie serwera
+    depends_on:
+      - redis
+  # serwis Redis, używamy gotowego obrazu z Docker Hub
+  redis:
+    image: redis:7
+    container_name: redis_container # Przy dockerze trzeba zmienić localhost na tą nazwę
+    ports:
+      - "6379:6379"
+
+  celery_worker:
+    build:
+      context: ./backend # Moze byc jak wyzej
+    container_name: celery_worker
+    command: celery -A app.config.celery_app:celery worker --loglevel=info
+    # kontener patrzy przez okno na Twój komputer i widzi dokładnie te same pliki.
+    volumes:
+      - ./backend:/app
+      - ./backend/db:/app/db 
+    env_file:
+      - .env
+    depends_on:
+      - backend
+      - redis
+    
+  celery_beat:
+    build:
+      context: ./backend
+    container_name: celery_beat
+    command: celery -A app.config.celery_app:celery beat --loglevel=info
+    volumes:
+      - ./backend:/app
+      - ./backend/db:/app/db 
+    env_file:
+      - .env
+    depends_on:
+      - backend
+      - redis

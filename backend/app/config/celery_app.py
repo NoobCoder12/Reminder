@@ -4,8 +4,8 @@ from db.base import engine
 
 celery = Celery(
     "tasks",
-    broker="redis://localhost:6379/0",
-    backend="redis://localhost:6379/0"
+    broker="redis://redis_container:6379/0",
+    backend="redis://redis_container:6379/0"
 )
 
 celery.conf.timezone = "Europe/Warsaw"
