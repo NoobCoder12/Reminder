@@ -18,6 +18,7 @@ __pycache__/
 test.db           # SQLite database
 *.sqlite3
 dump.rdb          # Redis dump file
+celerybeat-schedule.db
 
 # =========================
 # IDE / Editors
