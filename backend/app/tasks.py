@@ -46,16 +46,18 @@ def check_reminders():
             
             if r.alert_type == 'minutes':
                 ALERT_THRESHOLD_SECONDS = 15 * MINUTE    # 15 minutes before
-                subject = f"YOUR TASK IS DUE IN {ALERT_THRESHOLD_SECONDS // MINUTE} minutes"
+                subject = f"YOUR TASK IS DUE IN {ALERT_THRESHOLD_SECONDS // MINUTE} MINUTES"
             elif r.alert_type == 'hours':
                 ALERT_THRESHOLD_SECONDS = 1 * HOUR   # 1 hour before
-                subject = f"YOUR TASK IS DUE IN {ALERT_THRESHOLD_SECONDS // HOUR} hours"
+                subject = f"YOUR TASK IS DUE IN {ALERT_THRESHOLD_SECONDS // HOUR} HOUR"
             elif r.alert_type == 'days':
                 ALERT_THRESHOLD_SECONDS = 1 * DAY    # 1 days before
-                subject = f"YOUR TASK IS DUE IN {ALERT_THRESHOLD_SECONDS // DAY} days"
+                subject = f"YOUR TASK IS DUE IN {ALERT_THRESHOLD_SECONDS // DAY} DAY"
             
             # Making date aware
             due_to = r.due_to
+            
+            # due_to is stored in DB as UTC-naive datetime
             if due_to.tzinfo is None:
                 due_to = due_to.replace(tzinfo=timezone.utc)
                 

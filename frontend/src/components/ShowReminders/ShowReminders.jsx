@@ -70,25 +70,21 @@ function ShowReminders () {
     const formatToLocalTime = (dateString) => {
         if (!dateString) return "";
 
-        console.log("1. Original dateString:", dateString);  // ← DODAJ
-    
-        const isoString = dateString.replace(" ", "T") + 'Z';
-        
-        console.log("2. After ISO conversion:", isoString);  // ← DODAJ
+        const [day, month, yearAndTime] = dateString.split("-");
+        const [year, time] = yearAndTime.split(" ");
+        const isoString = `${year}-${month}-${day}T${time}:00Z`;
         
         const date = new Date(isoString);
-        
-        console.log("3. Date object:", date);  // ← DODAJ
-        console.log("4. Is valid?", !isNaN(date.getTime()));  // ← DODAJ
-        
+       
+        if (isNaN(date.getTime())) return "Invalid date";
+
         return date.toLocaleString(undefined, {
             year: "numeric",
             month: "2-digit",
             day: "2-digit",
             hour: "2-digit",
             minute: "2-digit",
-            timeZoneName: 'short',
-        })
+        });
     }
 
    return (

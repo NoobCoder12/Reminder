@@ -52,14 +52,12 @@ async def create_reminder(
     reminder: ReminderCreate, 
     db: Session = Depends(get_db)
 ):
-    due_to_naive = datetime.strptime(reminder.due_to, "%d-%m-%Y %H:%M")
-    due_to_datetime = due_to_naive.replace(tzinfo=timezone.utc)
-
+        
     new_reminder = crud.create_reminder(
         db,
         title=reminder.title,
         description=reminder.description,
-        due_to=due_to_datetime,
+        due_to=reminder.due_to,
         email=reminder.email,
         alert_type=reminder.alert_type
     )
