@@ -73,3 +73,5 @@ coverage.xml
 # Misc / temporary
 # =========================
 *.rdb        # Redis database dump
+
+.
