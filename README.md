@@ -66,8 +66,10 @@ The project taught me:
 4. Run FastAPI to create database:
 
     
-    ```cd backend/app
-    fastapi dev main.py```
+    ```
+    cd backend/app
+    fastapi dev main.py
+    ```
     
 
     After seeing "test.db" in db/ press CTRL + C to close the server.
