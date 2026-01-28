@@ -21,7 +21,8 @@
     animation: entry 0.8s ease-in-out;
 }
 
-.create input {
+.create input,
+.create select {
     background-color: white;
     height: 5vh;
     color: black;

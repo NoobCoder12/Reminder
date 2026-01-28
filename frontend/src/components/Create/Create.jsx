@@ -9,6 +9,7 @@ function Create () {
     const [dueTo, setDueTo] = useState("");
     const [message, setMessage] = useState("");
     const [email, setEmail] = useState("");
+    const [alertType, setAlertType] = useState("minutes");
     const navigate = useNavigate();
 
 
@@ -16,14 +17,20 @@ function Create () {
     const handleCreate = async () => {
         try {
             
-            function formatDate (dueTo) {
+            function formatDateToUTC(dueTo) {
                 if (!dueTo) {
                     return ""
                 }
-                const [date, time] = dueTo.split("T")
-                const [year, month, day] = date.split("-")
+                
+                const localDate = new Date(dueTo);
 
-                return `${day}-${month}-${year} ${time}`
+                const year = localDate.getUTCFullYear();
+                const month = String(localDate.getUTCMonth() + 1).padStart(2, "0"); // Transforming into 2 character number with 0 at the begining
+                const day = String(localDate.getUTCDate()).padStart(2, "0");
+                const hours = String(localDate.getUTCHours()).padStart(2, "0");
+                const minutes = String(localDate.getUTCMinutes()).padStart(2, "0");
+
+                return `${day}-${month}-${year} ${hours}:${minutes}`
             };
 
             const res = await fetch("http://localhost:8000/create", {
@@ -32,8 +39,9 @@ function Create () {
                 body: JSON.stringify({
                     title,
                     description,
-                    due_to: formatDate(dueTo),
-                    email
+                    due_to: formatDateToUTC(dueTo),
+                    email,
+                    alert_type: alertType,
                 }),
             });
 
@@ -63,6 +71,12 @@ function Create () {
             <input type='email' placeholder='Email' value={email} onChange={(e) => setEmail(e.target.value)}/> 
             
             <input type="datetime-local" placeholder='Due to' value={dueTo} onChange={(e) => setDueTo(e.target.value)}/>
+
+            <select onChange={(e) => setAlertType(e.target.value)}>
+                <option value="minutes">15 minutes</option>
+                <option value="hours">1 hour</option>
+                <option value="days">1 day</option>
+            </select>
 
             <button onClick={handleCreate}>Create</button>
 

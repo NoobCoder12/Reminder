@@ -67,6 +67,26 @@ function ShowReminders () {
         }
     }
 
+    const formatToLocalTime = (dateString) => {
+        if (!dateString) return "";
+
+        const [day, month, yearAndTime] = dateString.split("-");
+        const [year, time] = yearAndTime.split(" ");
+        const isoString = `${year}-${month}-${day}T${time}:00Z`;
+        
+        const date = new Date(isoString);
+       
+        if (isNaN(date.getTime())) return "Invalid date";
+
+        return date.toLocaleString(undefined, {
+            year: "numeric",
+            month: "2-digit",
+            day: "2-digit",
+            hour: "2-digit",
+            minute: "2-digit",
+        });
+    }
+
    return (
     <div className="reminders">
 
@@ -94,7 +114,7 @@ function ShowReminders () {
                     </div>
                 </div>
                 <p>{r.description}</p>
-                <p>Must be done until: <strong>{r.due_to}</strong></p>
+                <p>Must be done until: <strong>{formatToLocalTime(r.due_to)}</strong></p>
                 <p>Alert will be sent to email: <strong>{r.email}</strong></p>
             </div>
         ))}

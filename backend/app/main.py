@@ -6,7 +6,7 @@ from db import crud
 from typing import List
 from dotenv import load_dotenv
 from fastapi.middleware.cors import CORSMiddleware
-from datetime import datetime
+from datetime import datetime, timezone
 
 # Automatic db creation
 from db.base import Base, engine
@@ -52,14 +52,14 @@ async def create_reminder(
     reminder: ReminderCreate, 
     db: Session = Depends(get_db)
 ):
-    due_to_datetime = datetime.strptime(reminder.due_to, "%d-%m-%Y %H:%M")
-    
+        
     new_reminder = crud.create_reminder(
         db,
         title=reminder.title,
         description=reminder.description,
-        due_to=due_to_datetime,
-        email=reminder.email
+        due_to=reminder.due_to,
+        email=reminder.email,
+        alert_type=reminder.alert_type
     )
     return new_reminder
 
