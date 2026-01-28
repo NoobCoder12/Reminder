@@ -52,8 +52,9 @@ The project taught me:
     Create .env file in the root directory
 
 
-   ``` MAIL_HOST=smtp.gmail.com
-    MAIL_USERNAME=your_email.gmail.com
+    ``` 
+    MAIL_HOST=smtp.gmail.com
+    MAIL_USERNAME=your_email@gmail.com
     MAIL_PASSWORD=your_app_password
     MAIL_PORT=587
     ```
@@ -85,7 +86,7 @@ The app will be available at:
 
 
 ## Project Structure
-
+```
 ├── backend/
 │   ├── app/
 │   │   ├── config/
@@ -111,6 +112,7 @@ The app will be available at:
 ├── docker-compose.yml
 ├── .env
 └── README.md
+```
 
 ## What I learned?
 
