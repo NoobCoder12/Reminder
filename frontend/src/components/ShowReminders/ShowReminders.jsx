@@ -67,6 +67,30 @@ function ShowReminders () {
         }
     }
 
+    const formatToLocalTime = (dateString) => {
+        if (!dateString) return "";
+
+        console.log("1. Original dateString:", dateString);  // ← DODAJ
+    
+        const isoString = dateString.replace(" ", "T") + 'Z';
+        
+        console.log("2. After ISO conversion:", isoString);  // ← DODAJ
+        
+        const date = new Date(isoString);
+        
+        console.log("3. Date object:", date);  // ← DODAJ
+        console.log("4. Is valid?", !isNaN(date.getTime()));  // ← DODAJ
+        
+        return date.toLocaleString(undefined, {
+            year: "numeric",
+            month: "2-digit",
+            day: "2-digit",
+            hour: "2-digit",
+            minute: "2-digit",
+            timeZoneName: 'short',
+        })
+    }
+
    return (
     <div className="reminders">
 
@@ -94,7 +118,7 @@ function ShowReminders () {
                     </div>
                 </div>
                 <p>{r.description}</p>
-                <p>Must be done until: <strong>{r.due_to}</strong></p>
+                <p>Must be done until: <strong>{formatToLocalTime(r.due_to)}</strong></p>
                 <p>Alert will be sent to email: <strong>{r.email}</strong></p>
             </div>
         ))}

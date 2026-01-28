@@ -29,10 +29,6 @@ function Create () {
                 const day = String(localDate.getUTCDate()).padStart(2, "0");
                 const hours = String(localDate.getUTCHours()).padStart(2, "0");
                 const minutes = String(localDate.getUTCMinutes()).padStart(2, "0");
-            
-
-                // const [date, time] = dueTo.split("T")
-                // const [year, month, day] = date.split("-")
 
                 return `${day}-${month}-${year} ${hours}:${minutes}`
             };
