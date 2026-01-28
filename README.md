@@ -120,6 +120,7 @@ The app will be available at:
 - Celery Beat is perfect for recurring tasks, but need careful timezone handling for tasks connected with time
 - Docker is great for managing multiple services, especially when each one of them needs command to start in different terminal
 - SQLite is fine for development, but production may need PostgreSQL
+- Creating basic layout with React and its structure
 
 ## Future Improvements
 
