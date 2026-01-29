@@ -9,21 +9,21 @@ A reminder application with email notifications. Built to explore FastAPI and le
 I wanted to get hands-on with FastAPI and see how it handles operations using endpoints and background tasks. Since FastAPI doesn't use templates like Django or Flask, I paired it with React for the frontend — this kept the backend focused purely on API logic.
 
 The project taught me:
-    - How to structure FastAPI application
-    - Working with Celery for scheduled tasks
-    - Managing timezones properly (UTC in backend, local time in frontend)
-    - Creating basic frontend using React
+- How to structure FastAPI application
+- Working with Celery for scheduled tasks
+- Managing timezones properly (UTC in backend, local time in frontend)
+- Creating basic frontend using React
 
 ## Features
 
-    - Create reminders with title, description, deadline and email
-    - Choose when to get notified:
-        - 15 minutes before
-        - 1 hour before
-        - 1 day before
-    - Automatic email notifications via Celery Beat:
-        - Tasks are checked/sent every minute by default (can be edited in `backend/app/config/celery_app.py`)
-    - All times stored in UTC, displayed in local timezone
+- Create reminders with title, description, deadline and email
+- Choose when to get notified:
+    - 15 minutes before
+    - 1 hour before
+    - 1 day before
+- Automatic email notifications via Celery Beat:
+    - Tasks are checked/sent every minute by default (can be edited in `backend/app/config/celery_app.py`)
+- All times stored in UTC, displayed in local timezone
 
 ## Tech Stack
 
