@@ -127,11 +127,11 @@ The app will be available at:
 ## Future Improvements
 
 Things I'd add if I continue this project:
-    - User authentication (not all reminders visible for everyone)
-    - PostgreSQL instead of SQLite (for more workers and remote database)
-    - Sending alerts on mobile phone
-    - Better error handling and validation
-    - Deployment setup
+- User authentication (not all reminders visible for everyone)
+- PostgreSQL instead of SQLite (for more workers and remote database)
+- Sending alerts on mobile phone
+- Better error handling and validation
+- Deployment setup
 
 ## License
 
