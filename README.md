@@ -22,6 +22,7 @@ The project taught me:
         - 1 hour before
         - 1 day before
     - Automatic email notifications via Celery Beat
+        - Tasks are checked/sent every minute by default (can be edited in `backend/app/config/celery_app.py`)
     - All times stored in UTC, displayed in local timezone
 
 ## Tech Stack
