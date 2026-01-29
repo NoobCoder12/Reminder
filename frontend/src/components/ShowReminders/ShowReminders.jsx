@@ -92,15 +92,17 @@ function ShowReminders () {
 
         {message && <p>{message}</p>}
 
-        {reminders.length == 0 && (
+        {reminders.length == 0 ? (
             <>
-            <h1>Nothing to remember about yet</h1>
-            <button onClick={() => navigate("/create")}> Add your first reminder</button>
+            <h1 className="emptyTitle">Nothing to remember about yet</h1>
+            <button className="addNext" onClick={() => navigate("/create")}> Add your first reminder</button>
             </>
+        ) : (
+            <button className="addNext" onClick={() => navigate("/create")}> Add next reminder</button>
             )}
 
         {reminders.map((r, i) => (
-            <div className="reminder" key={r.id} style = {{ opacity: 0, animation: `entry 0.8s ease-out ${i}s forwards`}}>
+            <div className="reminder" key={r.id} style = {{ opacity: 0, animation: `entry 0.8s ease-out ${i+0.3}s forwards`}}>
                 <div className="header">
                     <h2>{r.title}</h2>
                     <div className="actions">

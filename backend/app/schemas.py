@@ -26,6 +26,7 @@ class ReminderUpdate(BaseModel):
     description: str | None = None
     due_to: datetime | None = None
     email: str | None = None
+    alert_type: Literal["minutes", 'hours', "days"] | None = None
 
     @field_validator('due_to', mode='before')
     def check_date(cls, value):
@@ -37,13 +38,13 @@ class ReminderUpdate(BaseModel):
             raise ValueError("Field should be filled in dd-mm-yyyy hh:mm format")
         
 
-
 class ReminderRead(BaseModel):
     id: int
     title: str
     description: str
     due_to: datetime
     email: str
+    alert_type: str
 
     class Config:
         from_attributes = True

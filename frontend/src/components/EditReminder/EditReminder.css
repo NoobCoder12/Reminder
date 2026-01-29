@@ -24,7 +24,8 @@
     animation: entry 0.8s ease-in-out 1.6s forwards;
 }
 
-.editForm input {
+.editForm input,
+.editForm select {
     background-color: white;
     height: 5vh;
     color: black;

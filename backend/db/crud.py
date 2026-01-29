@@ -36,15 +36,13 @@ def update_reminder(db: Session, id: int, update_data: ReminderUpdate):
     if not reminder:
         return None
 
-    update_dict = update_data.model_dump(exclude_unset=True)
+    update_dict = update_data.model_dump(exclude_unset=True)    # Pydantic object coverted into dict
     
     for field, value in update_dict.items():
-        if field == 'due_to':
-            value = datetime.strptime(value, "%d-%m-%Y %H:%M")
         setattr(reminder, field, value)
 
     db.commit()
-    db.refresh(reminder)
+    db.refresh(reminder)    # Object must know about changes
     return reminder
 
 

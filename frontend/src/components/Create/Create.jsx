@@ -14,24 +14,9 @@ function Create () {
 
 
 
-    const handleCreate = async () => {
+    const handleCreate = async (e) => {
+        e.preventDefault()
         try {
-            
-            function formatDateToUTC(dueTo) {
-                if (!dueTo) {
-                    return ""
-                }
-                
-                const localDate = new Date(dueTo);
-
-                const year = localDate.getUTCFullYear();
-                const month = String(localDate.getUTCMonth() + 1).padStart(2, "0"); // Transforming into 2 character number with 0 at the begining
-                const day = String(localDate.getUTCDate()).padStart(2, "0");
-                const hours = String(localDate.getUTCHours()).padStart(2, "0");
-                const minutes = String(localDate.getUTCMinutes()).padStart(2, "0");
-
-                return `${day}-${month}-${year} ${hours}:${minutes}`
-            };
 
             const res = await fetch("http://localhost:8000/create", {
                 method: "POST",
@@ -60,25 +45,47 @@ function Create () {
             }
         }
 
+    function formatDateToUTC(dueTo) {
+                if (!dueTo) {
+                    return ""
+                }
+                
+                
+                const localDate = new Date(dueTo);
+
+
+                const year = localDate.getUTCFullYear();
+                const month = String(localDate.getUTCMonth() + 1).padStart(2, "0"); // Transforming into 2 character number with 0 at the begining
+                const day = String(localDate.getUTCDate()).padStart(2, "0");
+                const hours = String(localDate.getUTCHours()).padStart(2, "0");
+                const minutes = String(localDate.getUTCMinutes()).padStart(2, "0");
+
+                return `${day}-${month}-${year} ${hours}:${minutes}`
+            };
+
     return (
         <div className='create'>
             <h1>Create Reminder</h1>
 
-            <input type='text' placeholder='Title' value={title} onChange={(e) => setTitle(e.target.value)}/>   {/*'value' is a value of hook value*/}
+            <form className="createForm" onSubmit={handleCreate}>
 
-            <textarea placeholder="Description" value={description} onChange={(e) => setDescription(e.target.value)}/>  {/*Event is automatically passed as function argument by default*/}
+                <input type='text' placeholder='Title' value={title} onChange={(e) => setTitle(e.target.value)}/>   {/*'value' is a value of hook value*/}
 
-            <input type='email' placeholder='Email' value={email} onChange={(e) => setEmail(e.target.value)}/> 
-            
-            <input type="datetime-local" placeholder='Due to' value={dueTo} onChange={(e) => setDueTo(e.target.value)}/>
+                <textarea placeholder="Description" value={description} onChange={(e) => setDescription(e.target.value)}/>  {/*Event is automatically passed as function argument by default*/}
 
-            <select onChange={(e) => setAlertType(e.target.value)}>
-                <option value="minutes">15 minutes</option>
-                <option value="hours">1 hour</option>
-                <option value="days">1 day</option>
-            </select>
+                <input type='email' placeholder='Email' value={email} onChange={(e) => setEmail(e.target.value)}/> 
+                
+                <input type="datetime-local" placeholder='Due to' value={dueTo} onChange={(e) => setDueTo(e.target.value)}/>
 
-            <button onClick={handleCreate}>Create</button>
+                <select value={alertType} onChange={(e) => setAlertType(e.target.value)}>
+                    <option value="minutes">15 minutes</option>
+                    <option value="hours">1 hour</option>
+                    <option value="days">1 day</option>
+                </select>
+
+                <button type='submit'>Create</button>
+
+            </form>
 
             {message && <p>{message}</p>}
         </div>
