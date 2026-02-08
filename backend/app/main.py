@@ -6,17 +6,25 @@ from db import crud
 from typing import List
 from dotenv import load_dotenv
 from fastapi.middleware.cors import CORSMiddleware
-from datetime import datetime, timezone
-
-# Automatic db creation
+from contextlib import asynccontextmanager
 from db.base import Base, engine
-Base.metadata.create_all(bind=engine)
+
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    """
+    Funtion gets executed during 'uvicorn main:app command'
+
+    lifespan needs a task, yield and optional task after yield
+    """
+    Base.metadata.create_all(bind=engine)
+    yield
 
 # Async functions need async sessions
 
 load_dotenv()
 
-app = FastAPI()
+app = FastAPI(lifespan=lifespan)
 
 origins = [
     "http://localhost:5173"
@@ -33,13 +41,13 @@ app.add_middleware(
 
 
 @app.get('/')
-async def index():
+def index():
     return {"message": "App is working"}
 
 
 @app.get('/reminders', response_model=List[ReminderRead], description="Returns all reminders in the app")
 # Get all reminders
-async def all_reminders(db: Session = Depends(get_db)):
+def all_reminders(db: Session = Depends(get_db)):
     reminders = crud.get_all_reminders(db)
     if not reminders:
         return []
@@ -48,7 +56,7 @@ async def all_reminders(db: Session = Depends(get_db)):
 
 @app.post('/create', response_model=ReminderRead, description="Create reminder")
 # Create reminder
-async def create_reminder(
+def create_reminder(
     reminder: ReminderCreate, 
     db: Session = Depends(get_db)
 ):
@@ -66,7 +74,7 @@ async def create_reminder(
 
 @app.get('/reminders/{id}', response_model=ReminderRead, description="Get reminders by its ID")
 # Get specific reminder
-async def get_reminder(id: int, db: Session = Depends(get_db)):
+def get_reminder(id: int, db: Session = Depends(get_db)):
     reminder = crud.get_reminder(db, id)
     if not reminder:
         raise HTTPException(status_code=404, detail="Object was not found")
@@ -75,7 +83,7 @@ async def get_reminder(id: int, db: Session = Depends(get_db)):
 
 @app.put('/reminders/{id}', response_model=ReminderRead, description="Edit reminder")
 # Update reminder values
-async def update_reminder(
+def update_reminder(
     id: int, 
     reminder: ReminderUpdate, 
     db: Session = Depends(get_db)
@@ -90,7 +98,7 @@ async def update_reminder(
 
 @app.delete('/reminders/{id}', description="Delete reminder by its ID")
 # Delete reminder
-async def delete_reminder(id: int, db: Session = Depends(get_db)):
+def delete_reminder(id: int, db: Session = Depends(get_db)):
     deleted = crud.delete_reminder(db, id)
     if not deleted:
         raise HTTPException(status_code=404, detail="Object was not found")
@@ -100,7 +108,7 @@ async def delete_reminder(id: int, db: Session = Depends(get_db)):
 
 @app.delete('/reminders', description="Delete all reminders")
 # Delete all reminders
-async def delete_all_reminders(db: Session = Depends(get_db)):
+def delete_all_reminders(db: Session = Depends(get_db)):
     deleted_reminders = crud.delete_all(db)
     if not deleted_reminders:
         return {'message': 'No reminders to delete'}
