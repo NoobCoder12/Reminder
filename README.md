@@ -48,7 +48,7 @@ To ensure the reliability of the API and database operations the project include
 - **Integrations Tests:** Built with `Pytest`, covering the full CRUD lifecycle
 - **API Simulation:** Uses FastAPI's `TestClient` with `httpx` to simulate real-world requests
 - **Isolated Database:** Tests run on separate, temporary SQLite database to ensure no side effects on developement base
-- **CI/CD Pipeline:** Automated testing via **GitHub ACtions**. Every `push` and `pull request` triggers the test suite on clean Linux environment.
+- **CI/CD Pipeline:** Automated testing via **GitHub Actions**. Every `push` and `pull request` triggers the test suite on clean Linux environment.
 
 > **Note on Celery Testing:** Background workers and email tasks are currently excluded from the integration suite to keep the CI pipeline lightweight. These components are verified through manual end-to-end testing with a Redis broker.
 
@@ -84,7 +84,7 @@ To run tests locally:
 
     https://support.google.com/mail/answer/185833?hl=en#zippy=
 
-4. Run FastAPI to create database:
+3. Run FastAPI to create database:
 
     
     ```
@@ -95,7 +95,7 @@ To run tests locally:
 
     After seeing "test.db" in db/ press CTRL + C to close the server.
 
-3. Run with Docker
+4. Run with Docker
 
     ```
     docker compose up --build
@@ -110,6 +110,10 @@ The app will be available at:
 
 ## Project Structure
 ```
+
+├── .github/workflows/
+│   └── tests.yml           # Config file for GitHub Actions
+│
 ├── backend/
 │   ├── app/
 │   │   ├── config/
@@ -117,13 +121,20 @@ The app will be available at:
 │   │   ├── schemas.py      # Pydantic models
 │   │   ├── send_mail.py    # Email logic
 │   │   └── tasks.py        # Celery tasks
+│   │ 
 │   ├── db/
 │   │   ├── models.py       # SQLAlchemy models
 │   │   ├── crud.py         # Database operations
 │   │   └── base.py         # DB connection
+│   │  
+│   ├── tests/
+│   │   ├── conftest.py     # Config file with fixtures
+│   │   └── test_api.py     # File with tests
+│   │ 
 │   ├── Dockerfile
-│   └── requirements.txt
-│
+│   ├── requirements.txt
+│   └── pytest.ini          # Config file for pytest
+│ 
 ├── frontend/
 │   ├── src/
 │   │   ├── components/     # React components

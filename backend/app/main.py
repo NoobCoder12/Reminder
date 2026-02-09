@@ -89,7 +89,7 @@ def update_reminder(
     db: Session = Depends(get_db)
 ):
     updated_reminder = crud.update_reminder(db, id, reminder)
-    
+
     if not updated_reminder:
         raise HTTPException(status_code=404, detail="Object was not found")
 

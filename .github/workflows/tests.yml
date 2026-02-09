@@ -18,7 +18,7 @@ jobs:
           python-version: '3.12'
 
       - name: Install dependencies
-        run: |            # Everything below will be treated as one line
+        run: |            # Everything below will be executed one by one
           python -m pip install --upgrade pip
           pip install -r backend/requirements.txt
           pip install pytest-cov httpx
