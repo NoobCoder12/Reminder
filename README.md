@@ -1,5 +1,6 @@
 # Reminder App
 
+[![Backend Tests](https://github.com/NoobCoder12/Reminder/actions/workflows/tests.yml/badge.svg)](https://github.com/NoobCoder12/Reminder/actions/workflows/tests.yml)
 
 ## Reminder App
 
