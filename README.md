@@ -52,9 +52,11 @@ To ensure the reliability of the API and database operations the project include
 > **Note on Celery Testing:** Background workers and email tasks are currently excluded from the integration suite to keep the CI pipeline lightweight. These components are verified through manual end-to-end testing with a Redis broker.
 
 To run tests locally:
-```bash
-cd backend
-pytest --cov=app --cov-report=term-missing
+
+    ```
+    cd backend
+    pytest --cov=app --cov-report=term-missing
+    ```
 
 ## Quick Start
 
