@@ -63,6 +63,7 @@ coverage.xml
 # Unit test / pytest
 # =========================
 .pytest_cache/
+test_api.db
 
 # =========================
 # Environment files
