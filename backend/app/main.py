@@ -13,7 +13,7 @@ from db.base import Base, engine
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     """
-    Funtion gets executed during 'uvicorn main:app command'
+    Funtion gets executed during 'uvicorn main:app command - server start'
 
     lifespan needs a task, yield and optional task after yield
     """
@@ -60,7 +60,7 @@ def create_reminder(
     reminder: ReminderCreate, 
     db: Session = Depends(get_db)
 ):
-        
+
     new_reminder = crud.create_reminder(
         db,
         title=reminder.title,

@@ -1,0 +1,31 @@
+# Config file for GitHub Actions
+
+name: Backend Tests
+
+on: [push, pull_request]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest  # Fastest option
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v6   # Copies code on VM
+
+      - name: Set up Python
+        uses: actions/setup-python@v5   # Official GitHub tool
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies
+        run: |            # Everything below will be treated as one line
+          python -m pip install --upgrade pip
+          pip install -r backend/requirements.txt
+          pip install pytest-cov httpx
+
+      - name: Run tests
+        env:
+          PYTHONPATH: ${{ github.workspace }}/backend   # github.workspace is a root dir, safe config
+        run: |
+          cd backend
+          pytest --cov=app --cov-report=term-missing

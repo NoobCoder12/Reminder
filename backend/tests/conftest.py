@@ -6,6 +6,8 @@ from fastapi.testclient import TestClient
 from app.main import app
 from db.deps import get_db
 
+# After running pytest this file is saved in memory. In case of any 'client' mentions it checkes the name here - Dependency Injection
+
 # Database for testing
 TEST_DATABASE_URL = "sqlite:///./test_api.db"
 
@@ -18,9 +20,8 @@ def test_db() -> Session:
     '''
 
     engine = create_engine(TEST_DATABASE_URL, connect_args={"check_same_thread": False})    # Create engine in RAM
-    
+
     from db.models import Reminder  # noqa: F401, import for Base
-    
 
     Base.metadata.create_all(bind=engine)   # Creating db
 
@@ -52,3 +53,14 @@ def client(test_db: Session) -> TestClient:
         yield c     # Creating client for an action
 
     app.dependency_overrides.clear()    # Switching back to database
+
+
+@pytest.fixture
+def reminder_payload():
+    return {
+        "title": 'Laundry',
+        "description": "Remember about laundry",
+        "due_to": "24-12-2026 12:00",
+        "email": "test@example.com",
+        "alert_type": "minutes"
+    }
