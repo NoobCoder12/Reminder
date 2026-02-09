@@ -47,7 +47,7 @@ The project taught me:
 To ensure the reliability of the API and database operations the project includes a comprehensive test suite:
 - **Integrations Tests:** Built with `Pytest`, covering the full CRUD lifecycle
 - **API Simulation:** Uses FastAPI's `TestClient` with `httpx` to simulate real-world requests
-- **Isolated Database:** Tests run on separate, temporary SQLite database to ensure no side effects on developement base
+- **Isolated Database:** Tests run on separate, temporary SQLite database to ensure no side effects on development base
 - **CI/CD Pipeline:** Automated testing via **GitHub Actions**. Every `push` and `pull request` triggers the test suite on clean Linux environment.
 
 > **Note on Celery Testing:** Background workers and email tasks are currently excluded from the integration suite to keep the CI pipeline lightweight. These components are verified through manual end-to-end testing with a Redis broker.
