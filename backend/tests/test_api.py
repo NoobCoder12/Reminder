@@ -128,3 +128,25 @@ def test_delete_all(client: TestClient, reminder_payload):
     response_delete = client.delete("/reminders")
     assert response_delete.status_code == 200
     assert response_delete.json() == {'message': 'No reminders to delete'}
+
+
+@pytest.mark.crud
+def test_get_missing_reminder(client: TestClient):
+    """
+    Returns status 404
+    """
+    example_id = 5
+    response = client.get(f"reminders/{example_id}")
+    assert response.status_code == 404
+    assert response.json()['detail'] == "Object was not found"
+
+
+@pytest.mark.crud
+def test_update_missing_reminder(client: TestClient):
+    """
+    Returns status 404
+    """
+    example_id = 999
+    response = client.put(f"reminders/{example_id}", json={})
+    assert response.status_code == 404
+    assert response.json()['detail'] == "Object was not found"
