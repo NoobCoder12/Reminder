@@ -84,23 +84,8 @@ To run tests locally:
 
     https://support.google.com/mail/answer/185833?hl=en#zippy=
 
-3. Install requirements:
-    ```
-    cd backend
-    pip install -r requirements.txt
-    ```
 
-3. Run FastAPI to create database:
-
-    
-    ```
-    uvicorn app.main:app --reload
-    ```
-    
-
-    After seeing "test.db" in db/ press CTRL + C to close the server.
-
-4. Run with Docker
+3. Run with Docker
 
     ```
     docker compose up --build
@@ -108,9 +93,9 @@ To run tests locally:
 
 
 The app will be available at:
-    - Frontend: http://localhost:5173
-    - Backend API: http://localhost:8000
-    - API Docs: http://localhost:8000/docs
+- Frontend: http://localhost:5173
+- Backend API: http://localhost:8000
+- API Docs: http://localhost:8000/docs
 
 
 ## Project Structure
