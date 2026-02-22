@@ -86,7 +86,7 @@ To run tests locally:
 
 3. Install requirements:
     ```
-    cd backend/app
+    cd backend
     pip install -r requirements.txt
     ```
 
