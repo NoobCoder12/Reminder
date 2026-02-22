@@ -88,7 +88,7 @@ To run tests locally:
 3. Run with Docker
 
     ```
-    docker compose up --build
+    docker compose up -d --build
     ```
 
 
