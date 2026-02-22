@@ -78,3 +78,4 @@ test_api.db
 
 # Image from DockerHub will contain its own modules
 frontend/node_modules/
+frontend/.vite/
