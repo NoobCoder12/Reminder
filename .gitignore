@@ -15,6 +15,7 @@ __pycache__/
 # Logs and databases
 # =========================
 *.log
+*.db
 test.db           # SQLite database
 *.sqlite3
 dump.rdb          # Redis dump file
@@ -75,4 +76,5 @@ test_api.db
 # =========================
 *.rdb        # Redis database dump
 
-.
+# Image from DockerHub will contain its own modules
+frontend/node_modules/
