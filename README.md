@@ -64,7 +64,7 @@ To run tests locally:
 1. Clone the repository
 
     ```
-    git clone
+    git clone https://github.com/NoobCoder12/Reminder.git
     cd Reminder
     ```
 
