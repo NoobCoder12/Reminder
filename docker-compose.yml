@@ -56,3 +56,18 @@ services:
     depends_on:
       - backend
       - redis
+
+  frontend:
+      image: node:20-alpine
+      container_name: react_frontend
+      working_dir: /app
+      ports:
+        - "5173:5173"
+      volumes:
+        - ./frontend:/app
+        - /app/node_modules # Docker użyje swoich paczek, nie Twoich z Windowsa/Maca
+      env_file:
+        - .env
+      command: sh -c "npm install && npm run dev -- --host"
+      depends_on:
+        - backend
