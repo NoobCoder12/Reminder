@@ -84,12 +84,17 @@ To run tests locally:
 
     https://support.google.com/mail/answer/185833?hl=en#zippy=
 
+3. Install requirements:
+    ```
+    cd backend/app
+    pip install -r requirements.txt
+    ```
+
 3. Run FastAPI to create database:
 
     
     ```
-    cd backend/app
-    fastapi dev main.py
+    uvicorn app.main:app --reload
     ```
     
 
