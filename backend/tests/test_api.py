@@ -7,7 +7,7 @@ def test_create_reminder(client: TestClient, reminder_payload):
     """
     Creating reminder, id should appera in data
     """
-    response = client.post("/create", json=reminder_payload)
+    response = client.post("/api/v1/create", json=reminder_payload)
 
     assert response.status_code == 200
     data = response.json()
@@ -20,11 +20,11 @@ def test_get_reminder(client: TestClient, reminder_payload):
     """
     Get one reminder, values should be matching
     """
-    response = client.post("/create", json=reminder_payload)
+    response = client.post("/api/v1/create", json=reminder_payload)
     assert response.status_code == 200
     data = response.json()
 
-    response_get = client.get(f"/reminders/{data.get('id')}")
+    response_get = client.get(f"/api/v1/reminders/{data.get('id')}")
 
     assert response_get.status_code == 200
     data_get = response_get.json()
@@ -40,12 +40,12 @@ def test_delete_reminder_and_error(client: TestClient, reminder_payload):
     Tests deleting all reminders.
     Aditionally checks status code for deleting non existing reminder
     """
-    response = client.post("/create", json=reminder_payload)
+    response = client.post("/api/v1/create", json=reminder_payload)
     assert response.status_code == 200
     data = response.json()
-    response_delete = client.delete(f"/reminders/{data['id']}")
+    response_delete = client.delete(f"/api/v1/reminders/{data['id']}")
     assert response_delete.status_code == 200
-    response_delete_2 = client.delete(f"/reminders/{data['id']}")
+    response_delete_2 = client.delete(f"/api/v1/reminders/{data['id']}")
     assert response_delete_2.status_code == 404
 
 
@@ -54,7 +54,7 @@ def test_put(client: TestClient, reminder_payload):
     """
     Tests PUT for Reminder, should return status code 200 and new values
     """
-    response = client.post("/create", json=reminder_payload)
+    response = client.post("/api/v1/create", json=reminder_payload)
     assert response.status_code == 200
     data = response.json()
 
@@ -63,10 +63,13 @@ def test_put(client: TestClient, reminder_payload):
         'description': "I've changed my mind"
     }
 
-    response_put = client.put(f"/reminders/{data['id']}", json=payload_put)
+    response_put = client.put(
+        f"/api/v1/reminders/{data['id']}",
+        json=payload_put
+    )
     assert response_put.status_code == 200
 
-    response_get = client.get(f"/reminders/{data['id']}")
+    response_get = client.get(f"/api/v1/reminders/{data['id']}")
     data_get = response_get.json()
 
     assert data_get['title'] == payload_put["title"]
@@ -78,7 +81,8 @@ def test_put(client: TestClient, reminder_payload):
 @pytest.mark.validation
 def test_wrong_date(client: TestClient):
     """
-    Tests providing wrong date format, should return status code 422 and ValueError
+    Tests wrong date format.
+    Should return status code 422 and ValueError.
     """
     payload = {
         "title": 'Laundry',
@@ -87,7 +91,7 @@ def test_wrong_date(client: TestClient):
         "email": "test@example.com",
         "alert_type": "minutes"
     }
-    response = client.post("/create", json=payload)
+    response = client.post("/api/v1/create", json=payload)
     assert response.status_code == 422
     assert "Field should be filled in dd-mm-yyyy hh:mm format" in response.text
 
@@ -97,12 +101,12 @@ def test_all_reminders(client: TestClient, reminder_payload):
     """
     Tests if getting all reminders works properly
     """
-    response = client.post("/create", json=reminder_payload)
+    response = client.post("/api/v1/create", json=reminder_payload)
     assert response.status_code == 200
-    response2 = client.post("/create", json=reminder_payload)
+    response2 = client.post("/api/v1/create", json=reminder_payload)
     assert response2.status_code == 200
 
-    response_get_all = client.get("/reminders")
+    response_get_all = client.get("/api/v1/reminders")
     assert response_get_all.status_code == 200
     assert len(response_get_all.json()) == 2
 
@@ -113,19 +117,19 @@ def test_delete_all(client: TestClient, reminder_payload):
     Test of deleting all reminders, should return empty list after.
     Message returned if trying to delete empty list.
     """
-    response = client.post("/create", json=reminder_payload)
+    response = client.post("/api/v1/create", json=reminder_payload)
     assert response.status_code == 200
-    response2 = client.post("/create", json=reminder_payload)
+    response2 = client.post("/api/v1/create", json=reminder_payload)
     assert response2.status_code == 200
 
-    response_delete = client.delete("/reminders")
+    response_delete = client.delete("/api/v1/reminders")
     assert response_delete.status_code == 200
 
-    response_get_all = client.get("/reminders")
+    response_get_all = client.get("/api/v1/reminders")
     assert response_get_all.status_code == 200
     assert response_get_all.json() == []
 
-    response_delete = client.delete("/reminders")
+    response_delete = client.delete("/api/v1/reminders")
     assert response_delete.status_code == 200
     assert response_delete.json() == {'message': 'No reminders to delete'}
 
@@ -136,7 +140,7 @@ def test_get_missing_reminder(client: TestClient):
     Returns status 404
     """
     example_id = 5
-    response = client.get(f"reminders/{example_id}")
+    response = client.get(f"/api/v1/reminders/{example_id}")
     assert response.status_code == 404
     assert response.json()['detail'] == "Object was not found"
 
@@ -147,6 +151,6 @@ def test_update_missing_reminder(client: TestClient):
     Returns status 404
     """
     example_id = 999
-    response = client.put(f"reminders/{example_id}", json={})
+    response = client.put(f"/api/v1/reminders/{example_id}", json={})
     assert response.status_code == 404
     assert response.json()['detail'] == "Object was not found"

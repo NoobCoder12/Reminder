@@ -1,5 +1,5 @@
 try {
-        const res = await fetch("http://localhost:8000/reminders");
+        const res = await fetch("http://localhost:8000/api/v1/reminders");
 
         if (!res.ok) throw new Error("Error fetching reminders");
 

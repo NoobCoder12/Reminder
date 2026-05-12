@@ -17,7 +17,7 @@ function DeleteReminder () {
     useEffect (() => {
         const fetchReminder = async () => {
             try{
-                const res = await fetch(`http://localhost:8000/reminders/${reminderID}`);
+                const res = await fetch(`http://localhost:8000/api/v1/reminders/${reminderID}`);
 
                 if (!res.ok) throw new Error("Fetching failed");
 
@@ -36,7 +36,7 @@ function DeleteReminder () {
 
     const deleteReminder = async () => {
         try {
-            const res = await fetch(`http://localhost:8000/reminders/${reminderID}`, {
+            const res = await fetch(`http://localhost:8000/api/v1/reminders/${reminderID}`, {
                 method: "DELETE",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(reminder)

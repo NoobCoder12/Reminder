@@ -21,7 +21,7 @@ function GetReminder() {
     useEffect(() => {
         const fetchReminder = async () => {
             try {
-                const res = await fetch(`http://localhost:8000/reminders/${reminderID}`)
+                const res = await fetch(`http://localhost:8000/api/v1/reminders/${reminderID}`)
 
                 if (!res.ok) throw new Error("Error fetching data");
 
@@ -80,7 +80,7 @@ function GetReminder() {
         e.preventDefault();  // Page won't refresh after submitting
 
         try {
-            const res = await fetch(`http://localhost:8000/reminders/${reminderID}`, {
+            const res = await fetch(`http://localhost:8000/api/v1/reminders/${reminderID}`, {
                 method: "PUT",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({

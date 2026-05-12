@@ -18,7 +18,7 @@ function Create () {
         e.preventDefault()
         try {
 
-            const res = await fetch("http://localhost:8000/create", {
+            const res = await fetch("http://localhost:8000/api/v1/create", {
                 method: "POST",
                 headers: { "Content-Type" : "application/json"},
                 body: JSON.stringify({
